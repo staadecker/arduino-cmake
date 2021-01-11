@@ -1805,8 +1805,7 @@ function(SETUP_ARDUINO_SKETCH TARGET_NAME SKETCH_PATH OUTPUT_VAR)
 
         # Find all sketch files
         file(GLOB SKETCH_SOURCES ${SKETCH_PATH}/*.pde ${SKETCH_PATH}/*.ino)
-        set(SKETCH_SOURCES ${SKETCH_SOURCES} ${ALL_SRCS})
-        set(ALL_SRCS ) # Clear source so to only submit one file
+	set(ALL_SRCS ${ALL_SRCS} ${SKETCH_SOURCES})
 	
         list(REMOVE_ITEM SKETCH_SOURCES ${MAIN_SKETCH})
         list(SORT SKETCH_SOURCES)
@@ -1819,7 +1818,7 @@ function(SETUP_ARDUINO_SKETCH TARGET_NAME SKETCH_PATH OUTPUT_VAR)
         add_custom_command(OUTPUT ${SKETCH_CPP}
                            COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}
                            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-                           DEPENDS ${MAIN_SKETCH} ${SKETCH_SOURCES}
+                           DEPENDS ${MAIN_SKETCH} ${ALL_SRCS}
                            COMMENT "Regnerating ${SKETCH_NAME} Sketch")
         set_source_files_properties(${SKETCH_CPP} PROPERTIES GENERATED TRUE)
         # Mark file that it exists for find_file
