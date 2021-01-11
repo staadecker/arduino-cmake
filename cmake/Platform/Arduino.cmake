@@ -1806,7 +1806,8 @@ function(SETUP_ARDUINO_SKETCH TARGET_NAME SKETCH_PATH OUTPUT_VAR)
         # Find all sketch files
         file(GLOB SKETCH_SOURCES ${SKETCH_PATH}/*.pde ${SKETCH_PATH}/*.ino)
         set(SKETCH_SOURCES ${SKETCH_SOURCES} ${ALL_SRCS})
-
+        set(ALL_SRCS ) # Clear source so to only submit one file
+	
         list(REMOVE_ITEM SKETCH_SOURCES ${MAIN_SKETCH})
         list(SORT SKETCH_SOURCES)
 
